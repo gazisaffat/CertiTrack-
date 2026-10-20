@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper font-body text-ink antialiased;
+  }
+
+  /* Certificates are printed on ruled stock — the page keeps a faint baseline grid. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to bottom, rgba(15, 42, 51, 0.045) 1px, transparent 1px);
+    background-size: 100% 32px;
+    z-index: 0;
+  }
+
+  #app-root {
+    position: relative;
+    z-index: 1;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-seal ring-offset-2 ring-offset-paper;
+  }
+}
+
+@layer components {
+  /* The signature element: a scheme code set like the header plate of a certificate. */
+  .plate {
+    @apply inline-flex items-center gap-2 border border-ink/25 bg-white px-2.5 py-1
+           font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-ink;
+  }
+
+  .stamp {
+    @apply inline-flex items-center border px-2 py-0.5 font-mono text-[10px]
+           font-medium uppercase tracking-[0.16em];
+  }
+
+  .card {
+    @apply border border-ink/12 bg-white shadow-plate;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 font-mono text-xs
+           font-medium uppercase tracking-[0.14em] transition disabled:cursor-not-allowed
+           disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-seal text-white hover:bg-ink;
+  }
+
+  .btn-ghost {
+    @apply btn border border-ink/25 bg-transparent text-ink hover:bg-ink hover:text-paper;
+  }
+
+  .field {
+    @apply w-full border border-ink/20 bg-white px-3 py-2.5 text-sm text-ink
+           placeholder:text-slate2/50 focus:border-seal;
+  }
+
+  .label {
+    @apply mb-1.5 block font-mono text-[11px] uppercase tracking-[0.14em] text-slate2;
+  }
+
+  .rule-perf {
+    @apply border-t border-dashed border-ink/25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
